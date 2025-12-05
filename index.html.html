@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>WEBNIXIA | Desarrollo Web Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ========== RESET ========== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background: #020617;
+      color: #e5e7eb;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.light {
+      background: #f4f4f5;
+      color: #020617;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ========== LAYOUT ========== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(2, 6, 23, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    body.light .navbar {
+      background: rgba(244, 244, 245, 0.9);
+      border-bottom-color: #e4e4e7;
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      color: #38bdf8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #38bdf8;
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1d4ed8, #38bdf8);
+      color: #f9fafb;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid #4b5563;
+      color: inherit;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    .theme-toggle {
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #4b5563;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    body.light .theme-toggle {
+      background: #e4e4e7;
+    }
+
+    .theme-toggle-ball {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #facc15;
+      transition: transform 0.2s ease;
+    }
+
+    body.light .theme-toggle-ball {
+      transform: translateX(14px);
+      background: #0f172a;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      padding: 80px 0 70px;
+      background: radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
+                  radial-gradient(circle at top right, #0f172a 0, transparent 55%);
+    }
+
+    body.light .hero {
+      background: radial-gradient(circle at top left, #bfdbfe 0, transparent 55%),
+                  radial-gradient(circle at top right, #e5e7eb 0, transparent 55%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 2fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #a5b4fc;
+      margin-bottom: 14px;
+    }
+
+    body.light .hero-kicker {
+      color: #3730a3;
+    }
+
+    .hero-title {
+      font-size: 2.7rem;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(135deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.02rem;
+      max-width: 470px;
+      color: #9ca3af;
+      margin-bottom: 26px;
+    }
+
+    body.light .hero-subtitle {
+      color: #4b5563;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    body.light .hero-meta {
+      color: #6b7280;
+    }
+
+    .hero-card {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 18px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.8);
+      border: 1px solid #1f2937;
+    }
+
+    body.light .hero-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 16px 40px rgba(148, 163, 184, 0.35);
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .hero-card-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+    }
+
+    body.light .hero-tag {
+      background: rgba(59, 130, 246, 0.12);
+      color: #1d4ed8;
+    }
+
+    .hero-badges {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      font-size: 0.8rem;
+      margin-bottom: 14px;
+    }
+
+    .hero-badge-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #111827;
+    }
+
+    body.light .hero-badge-item {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+
+    .hero-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    body.light .hero-stat-row {
+      color: #6b7280;
+    }
+
+    .hero-pill {
+      margin-top: 14px;
+      font-size: 0.75rem;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14);
+      color: #6ee7b7;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    body.light .hero-pill {
+      background: rgba(22, 163, 74, 0.12);
+      color: #16a34a;
+    }
+
+    /* ========== SECTIONS GENERIC ========== */
+    section {
+      padding: 70px 0;
+    }
+
+    section h2.section-title {
+      font-size: 1.9rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    section p.section-subtitle {
+      font-size: 0.95rem;
+      color: #9ca3af;
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+
+    body.light section p.section-subtitle {
+      color: #6b7280;
+    }
+
+    /* ========== SERVICES ========== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    @media (max-width: 950px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 16px;
+      border: 1px solid #1e293b;
+      padding: 20px 18px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.85);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.light .card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 14px 40px rgba(148, 163, 184, 0.35);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.95);
+      border-color: #38bdf8;
+    }
+
+    body.light .card:hover {
+      box-shadow: 0 18px 50px rgba(148, 163, 184, 0.5);
+      border-color: #2563eb;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: #e5e7eb;
+    }
+
+    body.light .card h3 {
+      color: #020617;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    body.light .card p {
+      color: #4b5563;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    body.light .card-tag {
+      background: rgba(59, 130, 246, 0.12);
+      color: #1d4ed8;
+    }
+
+    /* ========== PORTFOLIO ========== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    @media (max-width: 950px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .portfolio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .portfolio-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      min-height: 170px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.85);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    body.light .portfolio-item {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 14px 40px rgba(148, 163, 184, 0.35);
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 52px rgba(15, 23, 42, 0.95);
+      border-color: #38bdf8;
+    }
+
+    body.light .portfolio-item:hover {
+      box-shadow: 0 18px 52px rgba(148, 163, 184, 0.5);
+      border-color: #2563eb;
+    }
+
+    .portfolio-pill {
+      font-size: 0.7rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.18);
+      color: #e5e7eb;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    body.light .portfolio-pill {
+      background: rgba(148, 163, 184, 0.15);
+      color: #020617;
+    }
+
+    .portfolio-title {
+      font-size: 1rem;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .portfolio-meta {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    body.light .portfolio-meta {
+      color: #6b7280;
+    }
+
+    /* ========== TESTIMONIOS ========== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    @media (max-width: 950px) {
+      .testimonials-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .testimonials-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .testimonial {
+      padding: 20px 18px;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    body.light .testimonial {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 14px 40px rgba(148, 163, 184, 0.35);
+    }
+
+    .testimonial-stars {
+      color: #facc15;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    body.light .testimonial-text {
+      color: #111827;
+    }
+
+    .testimonial-client {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    body.light .testimonial-client {
+      color: #4b5563;
+    }
+
+    /* ========== PRICING ========== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 950px) {
+      .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pricing-card {
+      border-radius: 18px;
+      padding: 26px 22px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      position: relative;
+    }
+
+    body.light .pricing-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 18px 45px rgba(148, 163, 184, 0.4);
+    }
+
+    .pricing-card.highlight {
+      border-color: #38bdf8;
+      box-shadow: 0 20px 55px rgba(56, 189, 248, 0.55);
+    }
+
+    body.light .pricing-card.highlight {
+      border-color: #2563eb;
+      box-shadow: 0 20px 55px rgba(37, 99, 235, 0.55);
+    }
+
+    .pricing-label {
+      font-size: 0.75rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .pricing-name {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .pricing-price {
+      font-size: 1.6rem;
+      margin: 10px 0;
+    }
+
+    .pricing-price span {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    body.light .pricing-price span {
+      color: #6b7280;
+    }
+
+    .pricing-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: #9ca3af;
+      margin: 14px 0 18px;
+    }
+
+    body.light .pricing-list {
+      color: #4b5563;
+    }
+
+    .pricing-list li {
+      margin-bottom: 7px;
+    }
+
+    /* ========== ABOUT / STATS ========== */
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .about-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      color: #9ca3af;
+    }
+
+    body.light .about-text {
+      color: #4b5563;
+    }
+
+    .about-list {
+      margin-top: 16px;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .about-list li {
+      margin-bottom: 8px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      padding: 18px 16px;
+      background: #020617;
+      text-align: left;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    body.light .stat-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 14px 40px rgba(148, 163, 184, 0.4);
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    body.light .stat-label {
+      color: #6b7280;
+    }
+
+    /* ========== CONTACT ========== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .contact-card {
+      border-radius: 20px;
+      border: 1px solid #1f2937;
+      padding: 24px 20px;
+      background: #020617;
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
+    }
+
+    body.light .contact-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 18px 50px rgba(148, 163, 184, 0.4);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 650px) {
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      color: #9ca3af;
+    }
+
+    body.light .field label {
+      color: #4b5563;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      padding: 9px 10px;
+      font-size: 0.9rem;
+      background: #020617;
+      color: #e5e7eb;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    body.light .field input,
+    body.light .field textarea,
+    body.light .field select {
+      background: #f9fafb;
+      color: #020617;
+      border-color: #d4d4d8;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .error-msg {
+      font-size: 0.78rem;
+      color: #f97373;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .success-banner {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(22, 163, 74, 0.15);
+      border: 1px solid #22c55e;
+      color: #bbf7d0;
+    }
+
+    body.light .success-banner {
+      background: rgba(22, 163, 74, 0.08);
+      color: #166534;
+    }
+
+    .contact-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    body.light .contact-hint {
+      color: #6b7280;
+    }
+
+    .contact-info {
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    body.light .contact-info {
+      color: #4b5563;
+    }
+
+    .contact-info b {
+      color: #e5e7eb;
+    }
+
+    body.light .contact-info b {
+      color: #020617;
+    }
+
+    .contact-info ul {
+      margin-top: 10px;
+      list-style: none;
+    }
+
+    .contact-info li {
+      margin-bottom: 6px;
+    }
+
+    /* ========== "BACKEND" Y PAGOS (FRONT DEMO) ========== */
+    .admin-demo {
+      margin-top: 14px;
+      padding: 14px 12px;
+      border-radius: 14px;
+      border: 1px dashed #4b5563;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    body.light .admin-demo {
+      border-color: #d4d4d8;
+      color: #6b7280;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .dash-widget {
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid #1f2937;
+      background: #020617;
+    }
+
+    body.light .dash-widget {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    .dash-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    body.light .dash-label {
+      color: #6b7280;
+    }
+
+    .dash-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .dash-trend {
+      font-size: 0.7rem;
+      margin-top: 2px;
+      color: #4ade80;
+    }
+
+    .payment-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.75rem;
+      margin-top: 10px;
+    }
+
+    .payment-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+    }
+
+    body.light .payment-badge {
+      border-color: #d4d4d8;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      padding: 22px 0;
+      border-top: 1px solid #1f2937;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    body.light footer {
+      border-top-color: #e4e4e7;
+      color: #6b7280;
+    }
+
+    /* ========== WHATSAPP FLOAT ========== */
+    .whatsapp-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 40px rgba(22, 163, 74, 0.65);
+      cursor: pointer;
+      z-index: 60;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .whatsapp-float span {
+      font-size: 1.4rem;
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 20px 50px rgba(22, 163, 74, 0.8);
+      background: #16a34a;
+    }
+
+    /* ========== ANIMATIONS ON SCROLL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo animado -->
+  <canvas id="bg-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
+
+  <!-- WhatsApp flotante -->
+  <a class="whatsapp-float" href="https://wa.me/5490000000000?text=Hola%20quiero%20una%20p%C3%A1gina%20web" target="_blank" aria-label="Contactar por WhatsApp">
+    <span>🟢</span>
+  </a>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner container">
+      <div class="logo">WEBNIXIA</div>
+      <nav class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#portfolio">Proyectos</a>
+        <a href="#pricing">Planes</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-ghost" onclick="scrollToSection('contacto')">Cotizar</button>
+        <div class="theme-toggle" id="themeToggle">
+          <div class="theme-toggle-ball"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <div class="hero-kicker">Desarrollo Web & Sistemas</div>
+        <h1 class="hero-title">
+          Webs <span class="accent">profesionales</span> listas para vender desde el día 1.
+        </h1>
+        <p class="hero-subtitle">
+          Creamos páginas, tiendas online y sistemas en Python / JavaScript para que puedas ofrecer servicios digitales como una agencia real.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('contacto')">Quiero mi web</button>
+          <button class="btn btn-ghost" onclick="scrollToSection('pricing')">Ver planes</button>
+        </div>
+        <div class="hero-meta">
+          <span>⚡ Entregas rápidas</span>
+          <span>💼 Preparado para clientes reales</span>
+          <span>📱 100% adaptable a móvil</span>
+        </div>
+      </div>
+
+      <div class="hero-card reveal">
+        <div class="hero-card-header">
+          <div>
+            <div class="hero-card-title">Panel de pedidos (demo)</div>
+            <small style="color:#9ca3af;">Listo para conectar a backend en Python</small>
+          </div>
+          <span class="hero-tag">Dashboard</span>
+        </div>
+
+        <div class="hero-badges">
+          <div class="hero-badge-item">
+            <b>Pedidos del mes</b><br />
+            23 solicitudes de webs
+          </div>
+          <div class="hero-badge-item">
+            <b>Conversiones</b><br />
+            68% tasa de cierre
+          </div>
+        </div>
+
+        <div class="hero-stat-row">
+          <span>Ingresos estimados:</span>
+          <b>USD 2.300 / mes</b>
+        </div>
+        <div class="hero-stat-row">
+          <span>Automatizaciones Python:</span>
+          <span>Correos + guardado de clientes</span>
+        </div>
+
+        <div class="hero-pill">
+          • Esta vista es solo frontend y está lista para conectarse a tu lógica Python / base de datos.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="container">
+      <h2 class="section-title">Servicios para vender como agencia</h2>
+      <p class="section-subtitle">
+        Todo lo que necesitas para ofrecer páginas web y sistemas con una imagen profesional.
+      </p>
+
+      <div class="grid reveal">
+        <div class="card">
+          <span class="card-tag">Web Corporativa</span>
+          <h3>Páginas institucionales</h3>
+          <p>Diseños modernos para empresas, profesionales y marcas personales, optimizados para Google y móviles.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">E‑Commerce</span>
+          <h3>Tiendas online</h3>
+          <p>Carrito, stock, pagos y panel de productos. Ideal para negocios que quieren vender 24/7.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Landing</span>
+          <h3>Landing de venta</h3>
+          <p>Páginas enfocadas 100% en conversión para campañas de anuncios y lanzamientos.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Python</span>
+          <h3>Sistemas a medida</h3>
+          <p>Automatizaciones, paneles internos, bots, integraciones con APIs y scrapers de datos.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">JS / Frontend</span>
+          <h3>Aplicaciones web</h3>
+          <p>Interfaces dinámicas usando JavaScript listas para conectar a APIs y bases de datos.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Mantenimiento</span>
+          <h3>Soporte y hosting</h3>
+          <p>Actualizaciones, backups, seguridad y soporte técnico para tus clientes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="container">
+      <h2 class="section-title">Proyectos que podrías mostrar</h2>
+      <p class="section-subtitle">
+        Ejemplos de sitios que puedes presentar a tus clientes como parte de tu portafolio profesional.
+      </p>
+
+      <div class="portfolio-grid reveal">
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">Empresa de servicios</span>
+            <div class="portfolio-title">“NovaClean Solutions”</div>
+            <div class="portfolio-meta">Web corporativa · Sección de servicios · Formulario de presupuesto</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Ideal para mostrar estructura de empresa + contacto.</div>
+        </div>
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">E‑commerce</span>
+            <div class="portfolio-title">“UrbanFit Store”</div>
+            <div class="portfolio-meta">Catálogo de productos · Carrito · Checkout</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Muestra cómo se ve una tienda completa.</div>
+        </div>
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">Landing</span>
+            <div class="portfolio-title">“Lanzamiento App Móvil”</div>
+            <div class="portfolio-meta">Página enfocada en descargas con testimonios y FAQ.</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Ideal para campañas Ads.</div>
+        </div>
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">Sistema Python</span>
+            <div class="portfolio-title">“Panel de turnos online”</div>
+            <div class="portfolio-meta">Gestión de clientes + reservas + recordatorios por mail.</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Presenta tu lado más técnico.</div>
+        </div>
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">Panel Admin</span>
+            <div class="portfolio-title">“Dashboard de ventas”</div>
+            <div class="portfolio-meta">Gráficos, métricas y reportes listos para conectar a base de datos.</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Se ve muy profesional en demos.</div>
+        </div>
+        <div class="portfolio-item">
+          <div>
+            <span class="portfolio-pill">Marca personal</span>
+            <div class="portfolio-title">“Portfolio Freelance Dev”</div>
+            <div class="portfolio-meta">Blog, proyectos, contacto y redes.</div>
+          </div>
+          <div class="portfolio-meta" style="margin-top:10px;">→ Perfecto para mostrar lo que tú haces.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios">
+    <div class="container">
+      <h2 class="section-title">Testimonios que inspiran confianza</h2>
+      <p class="section-subtitle">
+        Usa testimonios como estos (reales o de ejemplo) para aumentar la conversión de tus visitas.
+      </p>
+
+      <div class="testimonials-grid reveal">
+        <div class="testimonial">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            “En menos de 10 días tenía la web de mi negocio online, lista para pasar a mis clientes. Súper clara y rápida.”
+          </p>
+          <div class="testimonial-client">— Laura, Estudio Contable</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            “La tienda online se conectó perfecto con MercadoPago. Hoy el 80% de mis ventas ya son por la web.”
+          </p>
+          <div class="testimonial-client">— Martín, Tienda de Ropa</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            “Nos desarrollaron un sistema interno en Python que nos ahorra horas de trabajo todas las semanas.”
+          </p>
+          <div class="testimonial-client">— Sofía, Agencia de Marketing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT + STATS + ADMIN DEMO -->
+  <section id="nosotros">
+    <div class="container">
+      <h2 class="section-title">Pensado como un negocio real</h2>
+      <p class="section-subtitle">
+        No es solo una web linda: está pensada para que vendas servicios, gestiones clientes y escales.
+      </p>
+
+      <div class="about-layout reveal">
+        <div>
+          <p class="about-text">
+            Esta estructura de sitio está armada como lo haría una agencia profesional de desarrollo:
+            con secciones enfocadas en conversión, pruebas sociales, planes claros y automatización lista para conectar a tu backend.
+          </p>
+          <ul class="about-list">
+            <li>✅ Preparado para conectarse a APIs de pago (MercadoPago, PayPal, Stripe).</li>
+            <li>✅ Listo para registrar leads en una base de datos o CRM.</li>
+            <li>✅ Estructura limpia en HTML, CSS y JavaScript para que puedas ampliarla.</li>
+            <li>✅ Totalmente responsive para que luzca perfecto en móvil.</li>
+          </ul>
+          <div class="admin-demo">
+            <b>Idea de backend en Python:</b><br />
+            • Endpoint para recibir el formulario de contacto y guardar el lead.<br />
+            • Script que manda correo automático de bienvenida al cliente.<br />
+            • Panel interno que lee desde base de datos y muestra pedidos en tiempo real.<br />
+            • Cronjobs para enviar recordatorios o reportes de ventas.
+          </div>
+        </div>
+
+        <div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">+30</div>
+              <div class="stat-label">webs / sistemas que podrías gestionar con esta estructura.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">3x</div>
+              <div class="stat-label">más probabilidades de que un cliente te escriba con una web profesional.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">24/7</div>
+              <div class="stat-label">tu negocio visible incluso cuando no estás conectado.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">personalizable: colores, textos, servicios y planes.</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid" style="margin-top:18px;">
+            <div class="dash-widget">
+              <div class="dash-label">Leads este mes</div>
+              <div class="dash-value" id="leadsMes">37</div>
+              <div class="dash-trend">▲ +12 vs mes anterior</div>
+            </div>
+            <div class="dash-widget">
+              <div class="dash-label">Proyectos activos</div>
+              <div class="dash-value" id="proyectosActivos">9</div>
+              <div class="dash-trend">En curso</div>
+            </div>
+            <div class="dash-widget">
+              <div class="dash-label">Ingresos estimados</div>
+              <div class="dash-value" id="ingresosEstimados">$ 3.750</div>
+              <div class="dash-trend">Objetivo 5k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING + PAGOS -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Planes listos para ofrecer</h2>
+      <p class="section-subtitle">
+        Muestra a tus clientes planes claros. Puedes cambiar precios, monedas y características cuando quieras.
+      </p>
+
+      <div class="pricing-grid reveal">
+        <div class="pricing-card">
+          <span class="pricing-label">Emprendedores</span>
+          <div class="pricing-name">Plan Básico</div>
+          <div class="pricing-price">$ 150<span> / única vez</span></div>
+          <ul class="pricing-list">
+            <li>• 1 página (scroll único).</li>
+            <li>• Sección servicios + contacto.</li>
+            <li>• Adaptada a móvil.</li>
+            <li>• Botón de WhatsApp.</li>
+          </ul>
+          <button class="btn btn-ghost" onclick="scrollToSection('contacto')">Quiero este plan</button>
+        </div>
+
+        <div class="pricing-card highlight">
+          <span class="pricing-label">Más vendido</span>
+          <div class="pricing-name">Plan Profesional</div>
+          <div class="pricing-price">$ 350<span> / única vez</span></div>
+          <ul class="pricing-list">
+            <li>• Hasta 5 secciones o páginas.</li>
+            <li>• Formulario de contacto conectado a backend.</li>
+            <li>• Integración de pago (ej: MercadoPago / PayPal).</li>
+            <li>• Optimización básica SEO.</li>
+          </ul>
+          <button class="btn btn-primary" onclick="scrollToSection('contacto')">Contratar</button>
+        </div>
+
+        <div class="pricing-card">
+          <span class="pricing-label">Empresas / SaaS</span>
+          <div class="pricing-name">Plan Full + Sistema</div>
+          <div class="pricing-price">$ 750+<span> / proyecto</span></div>
+          <ul class="pricing-list">
+            <li>• Web completa + sistema en Python.</li>
+            <li>• Dashboard de administración.</li>
+            <li>• Integraciones (APIs, pagos, etc.).</li>
+            <li>• Soporte y mantenimiento.</li>
+          </ul>
+          <button class="btn btn-ghost" onclick="scrollToSection('contacto')">Hablar del proyecto</button>
+        </div>
+      </div>
+
+      <div class="payment-badges">
+        <div class="payment-badge">💳 MercadoPago (a integrar)</div>
+        <div class="payment-badge">💳 PayPal / Stripe</div>
+        <div class="payment-badge">💵 Transferencia / Crypto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="container">
+      <h2 class="section-title">Hagamos tu próxima web</h2>
+      <p class="section-subtitle">
+        Completa el formulario y te responderé con un presupuesto orientativo y próximos pasos.
+      </p>
+
+      <div class="contact-grid reveal">
+        <div class="contact-card">
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="nombre">Nombre y apellido</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" />
+                <div class="error-msg" id="errNombre">Por favor ingresa tu nombre.</div>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" />
+                <div class="error-msg" id="errEmail">Ingresa un email válido.</div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="tipo">Tipo de proyecto</label>
+              <select id="tipo" name="tipo">
+                <option value="">Selecciona una opción</option>
+                <option value="web">Página web corporativa</option>
+                <option value="tienda">Tienda online</option>
+                <option value="landing">Landing page</option>
+                <option value="sistema">Sistema en Python</option>
+                <option value="otro">Otro</option>
+              </select>
+              <div class="error-msg" id="errTipo">Selecciona el tipo de proyecto.</div>
+            </div>
+            <div class="field">
+              <label for="mensaje">Cuéntame de tu proyecto</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Ej: Necesito una página para mi negocio de..."></textarea>
+              <div class="error-msg" id="errMensaje">Describe brevemente tu proyecto.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar consulta</button>
+            <div class="success-banner" id="successBanner">
+              ¡Gracias! Tu consulta fue registrada (demo). Aquí podrías conectar con un backend en Python que guarde el lead y envíe un mail.
+            </div>
+            <div class="contact-hint">
+              * Esto es una demo frontend: puedes conectar este formulario a tu API en Python, PHP, Node, etc.
+            </div>
+          </form>
+        </div>
+
+        <div class="contact-info">
+          <p>
+            También puedes escribirme directamente por:
+          </p>
+          <ul>
+            <li><b>WhatsApp:</b> +54 9 00 0000 0000</li>
+            <li><b>Email:</b> contacto@webnixia.com</li>
+            <li><b>Instagram:</b> @webnixia</li>
+          </ul>
+          <p style="margin-top:14px;">
+            Horario de respuesta de lunes a viernes, 9 a 18 hs.
+          </p>
+          <p style="margin-top:14px; font-size:0.85rem;">
+            Puedes ofrecer este mismo sitio a tus clientes cambiando textos, colores, logo y precios. Solo adapta
+            el branding y tendrás tu propia agencia digital funcionando.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © <span id="year"></span> WEBNIXIA · Hecho con HTML, CSS, JS y listo para conectar a Python.
+  </footer>
+
+  <script>
+    // Año actual
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll suave a secciones
+    function scrollToSection(id) {
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Toggle de tema (oscuro / claro)
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    function applyTheme(theme) {
+      if (theme === "light") {
+        body.classList.add("light");
+      } else {
+        body.classList.remove("light");
+      }
+    }
+
+    // Cargar preferencia guardada
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    }
+
+    themeToggle.addEventListener("click", function () {
+      const isLight = body.classList.toggle("light");
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+    });
+
+    // Animaciones al hacer scroll
+    const revealElements = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealElements.forEach((el) => observer.observe(el));
+
+    // Validación simple de formulario
+    const form = document.getElementById("contactForm");
+    const errNombre = document.getElementById("errNombre");
+    const errEmail = document.getElementById("errEmail");
+    const errTipo = document.getElementById("errTipo");
+    const errMensaje = document.getElementById("errMensaje");
+    const successBanner = document.getElementById("successBanner");
+
+    function validarEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nombre = form.nombre.value.trim();
+      const email = form.email.value.trim();
+      const tipo = form.tipo.value.trim();
+      const mensaje = form.mensaje.value.trim();
+
+      let valido = true;
+
+      if (!nombre) {
+        errNombre.style.display = "block";
+        valido = false;
+      } else {
+        errNombre.style.display = "none";
+      }
+
+      if (!email || !validarEmail(email)) {
+        errEmail.style.display = "block";
+        valido = false;
+      } else {
+        errEmail.style.display = "none";
+      }
+
+      if (!tipo) {
+        errTipo.style.display = "block";
+        valido = false;
+      } else {
+        errTipo.style.display = "none";
+      }
+
+      if (!mensaje || mensaje.length < 10) {
+        errMensaje.style.display = "block";
+        valido = false;
+      } else {
+        errMensaje.style.display = "none";
+      }
+
+      if (!valido) return;
+
+      // Aquí iría la llamada real a tu backend (fetch/axios)
+      successBanner.style.display = "block";
+
+      // Limpiar demo
+      form.reset();
+    });
+  </script>
+
+  <script>
+    // Fondo animado de partículas
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    const particles = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 90; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 2 + 1,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#38bdf8";
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+  </script>
+
+</body>
+</html>
