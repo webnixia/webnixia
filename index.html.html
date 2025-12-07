@@ -1617,7 +1617,7 @@
 
     animateParticles();
   </script>
-<!-- ================= CHATBOT NIXIA AUTO PRO ================= -->
+<!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
 <style>
 .chatbot-launch {
   position: fixed;
@@ -1709,11 +1709,11 @@
 
   <div class="chat-body" id="chatBox">
     <div class="bot">👋 ¡Hola! Soy el asistente de WEBNIXIA.</div>
-    <div class="bot">¿Quieres una página, una tienda online o un sistema?</div>
+    <div class="bot">¿Querés una página web, una tienda online o un sistema?</div>
   </div>
 
   <div class="chat-input">
-    <input type="text" id="chatLiveInput" placeholder="Escribe tu mensaje..." />
+    <input type="text" id="chatLiveInput" placeholder="Escribí tu mensaje..." />
     <button onclick="sendLive()">➤</button>
   </div>
 </div>
@@ -1721,8 +1721,14 @@
 <script>
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
+const chatWidget = document.getElementById("chatBotLive");
 
-// ENVIAR CON ENTER
+const botState = {
+  lastIntent: null,
+  name: null,
+  projectType: null
+};
+
 input.addEventListener("keydown", e => {
   if(e.key === "Enter"){
     e.preventDefault();
@@ -1738,36 +1744,83 @@ function sendLive(){
   input.value = "";
   chat.scrollTop = chat.scrollHeight;
 
-  setTimeout(() => botLive(text.toLowerCase()), 700);
+  setTimeout(() => botLive(text), 500);
 }
 
-function botLive(text){
-  let r = "Perfecto ✅ ¿Quieres que te asesore por WhatsApp?";
+function normalizeText(str) {
+  return str.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9áéíóúñ\s]/gi, " ");
+}
 
-  if(text.includes("precio") || text.includes("plan"))
-    r = "Tenemos webs desde $150 y sistemas avanzados desde $750.";
+function includesAny(text, keywords) {
+  return keywords.some(k => text.includes(k));
+}
 
-  if(text.includes("tienda"))
-    r = "Las tiendas incluyen carrito, pagos y panel de productos.";
+function botLive(userText) {
+  const t = normalizeText(userText);
+  let r = "";
 
-  if(text.includes("si") || text.includes("whatsapp")){
-    r = "Genial, te paso directo con un asesor 👇";
-    setTimeout(()=> {
+  if(includesAny(t, ["hola","buenas","que tal"])) {
+    r = "¡Hola! 🙌 Contame qué tipo de proyecto tenés en mente.";
+  }
+
+  else if(includesAny(t, ["precio","cuanto","vale","costo"])) {
+    r = "Las webs arrancan desde $150, tiendas online desde $350 y sistemas a medida desde $750. ¿Qué te interesa hacer?";
+  }
+
+  else if(includesAny(t, ["tienda","ecommerce"])) {
+    r = "Las tiendas incluyen catálogo, carrito, pagos, stock y panel administrador.";
+  }
+
+  else if(includesAny(t, ["web","pagina"])) {
+    r = "Hacemos webs institucionales, landing pages y páginas para negocios.";
+  }
+
+  else if(includesAny(t, ["sistema","panel","dashboard"])) {
+    r = "Desarrollamos sistemas en Python con panel, usuarios y base de datos.";
+  }
+
+  else if(includesAny(t, ["facebook","instagram","redes"])) {
+    r = "Sí, integramos Facebook, Instagram y WhatsApp para captar clientes.";
+  }
+
+  else if(includesAny(t, ["horario"])) {
+    r = "Respondemos todos los días dentro de las 24 horas.";
+  }
+
+  else if(includesAny(t, ["donde","ubicados"])) {
+    r = "Trabajamos de forma online con clientes de cualquier país 🌍";
+  }
+
+  else if(includesAny(t, ["whatsapp","contacto","hablar"])) {
+    r = "Perfecto, si querés te paso directo con un asesor.";
+    botState.lastIntent = "whatsapp";
+  }
+
+  else if(includesAny(t, ["si","dale","ok"]) && botState.lastIntent === "whatsapp") {
+    r = "Genial, te abro WhatsApp ahora 👇";
+    setTimeout(() => {
       window.open("https://wa.me/5493483466199", "_blank");
-    }, 1200);
+    }, 1000);
+  }
+
+  else {
+    r = "Buenísimo 😎 Contame un poco más así te oriento mejor.";
   }
 
   chat.innerHTML += `<div class="bot">${r}</div>`;
   chat.scrollTop = chat.scrollHeight;
 }
 
-// ✅ SE ABRE SOLO AL ENTRAR
+// ✅ Se abre solo al entrar
 setTimeout(() => {
-  document.getElementById("chatBotLive").style.display = "block";
+  chatWidget.style.display = "block";
   input.focus();
 }, 1200);
 </script>
-<!-- ================= FIN CHATBOT AUTO PRO ================= -->
+<!-- ================= FIN CHATBOT WEBNIXIA ================= -->
 
 </body>
 </html>
