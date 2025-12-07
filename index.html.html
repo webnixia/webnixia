@@ -1746,13 +1746,13 @@ async function botLive(userText) {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    const res = await fetch("https://webnixia-bot.onrender.com/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: userText })
-    });
+const res = await fetch("https://webnixia-bot.onrender.com/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: "message=" + encodeURIComponent(userText)
+});
 
     const data = await res.json();
     const bots = document.querySelectorAll(".bot");
