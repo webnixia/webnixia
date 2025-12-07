@@ -1723,94 +1723,45 @@ const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
 
-const botState = {
-  lastIntent: null,
-  name: null,
-  projectType: null
-};
-
 input.addEventListener("keydown", e => {
-  if(e.key === "Enter"){
+  if (e.key === "Enter") {
     e.preventDefault();
     sendLive();
   }
 });
 
-function sendLive(){
+function sendLive() {
   const text = input.value.trim();
-  if(!text) return;
+  if (!text) return;
 
   chat.innerHTML += `<div class="user">${text}</div>`;
   input.value = "";
   chat.scrollTop = chat.scrollHeight;
 
-  setTimeout(() => botLive(text), 500);
+  setTimeout(() => botLive(text), 400);
 }
 
-function normalizeText(str) {
-  return str.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9áéíóúñ\s]/gi, " ");
-}
+async function botLive(userText) {
+  chat.innerHTML += `<div class="bot">🤖 Pensando...</div>`;
+  chat.scrollTop = chat.scrollHeight;
 
-function includesAny(text, keywords) {
-  return keywords.some(k => text.includes(k));
-}
+  try {
+    const res = await fetch("http://127.0.0.1:8000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userText })
+    });
 
-function botLive(userText) {
-  const t = normalizeText(userText);
-  let r = "";
+    const data = await res.json();
+    const bots = document.querySelectorAll(".bot");
+    bots[bots.length - 1].innerHTML = data.reply;
 
-  if(includesAny(t, ["hola","buenas","que tal"])) {
-    r = "¡Hola! 🙌 Contame qué tipo de proyecto tenés en mente.";
+  } catch (error) {
+    chat.innerHTML += `<div class="bot">❌ No se pudo conectar con la IA</div>`;
   }
 
-  else if(includesAny(t, ["precio","cuanto","vale","costo"])) {
-    r = "Las webs arrancan desde $150, tiendas online desde $350 y sistemas a medida desde $750. ¿Qué te interesa hacer?";
-  }
-
-  else if(includesAny(t, ["tienda","ecommerce"])) {
-    r = "Las tiendas incluyen catálogo, carrito, pagos, stock y panel administrador.";
-  }
-
-  else if(includesAny(t, ["web","pagina"])) {
-    r = "Hacemos webs institucionales, landing pages y páginas para negocios.";
-  }
-
-  else if(includesAny(t, ["sistema","panel","dashboard"])) {
-    r = "Desarrollamos sistemas en Python con panel, usuarios y base de datos.";
-  }
-
-  else if(includesAny(t, ["facebook","instagram","redes"])) {
-    r = "Sí, integramos Facebook, Instagram y WhatsApp para captar clientes.";
-  }
-
-  else if(includesAny(t, ["horario"])) {
-    r = "Respondemos todos los días dentro de las 24 horas.";
-  }
-
-  else if(includesAny(t, ["donde","ubicados"])) {
-    r = "Trabajamos de forma online con clientes de cualquier país 🌍";
-  }
-
-  else if(includesAny(t, ["whatsapp","contacto","hablar"])) {
-    r = "Perfecto, si querés te paso directo con un asesor.";
-    botState.lastIntent = "whatsapp";
-  }
-
-  else if(includesAny(t, ["si","dale","ok"]) && botState.lastIntent === "whatsapp") {
-    r = "Genial, te abro WhatsApp ahora 👇";
-    setTimeout(() => {
-      window.open("https://wa.me/5493483466199", "_blank");
-    }, 1000);
-  }
-
-  else {
-    r = "Buenísimo 😎 Contame un poco más así te oriento mejor.";
-  }
-
-  chat.innerHTML += `<div class="bot">${r}</div>`;
   chat.scrollTop = chat.scrollHeight;
 }
 
