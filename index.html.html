@@ -1746,7 +1746,7 @@ async function botLive(userText) {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/chat", {
+    const res = await fetch("https://webnixia-bot.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -1758,8 +1758,16 @@ async function botLive(userText) {
     const bots = document.querySelectorAll(".bot");
     bots[bots.length - 1].innerHTML = data.reply;
 
+    // ✅ Si la IA menciona WhatsApp, lo abre solo
+    if (data.reply.toLowerCase().includes("whatsapp")) {
+      setTimeout(() => {
+        window.open("https://wa.me/5493483466199", "_blank");
+      }, 1200);
+    }
+
   } catch (error) {
-    chat.innerHTML += `<div class="bot">❌ No se pudo conectar con la IA</div>`;
+    const bots = document.querySelectorAll(".bot");
+    bots[bots.length - 1].innerHTML = "❌ Error de conexión con el servidor.";
   }
 
   chat.scrollTop = chat.scrollHeight;
@@ -1772,6 +1780,7 @@ setTimeout(() => {
 }, 1200);
 </script>
 <!-- ================= FIN CHATBOT WEBNIXIA ================= -->
+
 
 </body>
 </html>
