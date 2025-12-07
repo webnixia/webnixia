@@ -1622,89 +1622,99 @@
 
     animateParticles();
   </script>
-<!-- ================= CHATBOT NIXIA ================= -->
+<!-- ================= CHATBOT NIXIA PRO ================= -->
 <style>
-  .chatbot-btn {
-    position: fixed;
-    right: 18px;
-    bottom: 80px;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #38bdf8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 70;
-    box-shadow: 0 16px 40px rgba(56, 189, 248, 0.6);
-    font-size: 1.4rem;
-  }
+.chatbot-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 80px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#38bdf8,#2563eb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 70;
+  box-shadow: 0 14px 35px rgba(56,189,248,.6);
+  font-size: 1.4rem;
+  transition: transform .2s ease;
+}
+.chatbot-btn:hover { transform: scale(1.08); }
 
-  .chatbot-box {
-    position: fixed;
-    right: 18px;
-    bottom: 140px;
-    width: 300px;
-    background: #020617;
-    border: 1px solid #1f2937;
-    border-radius: 16px;
-    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 70;
-  }
+.chatbot-box {
+  position: fixed;
+  right: 18px;
+  bottom: 140px;
+  width: 320px;
+  background: #020617;
+  border: 1px solid #1f2937;
+  border-radius: 18px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.85);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 70;
+  animation: chatUp .25s ease;
+}
+@keyframes chatUp { from {opacity:0; transform:translateY(10px);} }
 
-  .chatbot-header {
-    background: linear-gradient(135deg, #1d4ed8, #38bdf8);
-    padding: 12px;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
+.chatbot-header {
+  background: linear-gradient(135deg,#1d4ed8,#38bdf8);
+  padding: 12px;
+  font-size: .9rem;
+  font-weight: 600;
+}
 
-  .chatbot-messages {
-    padding: 10px;
-    height: 220px;
-    overflow-y: auto;
-    font-size: 0.85rem;
-  }
+.chatbot-messages {
+  padding: 12px;
+  height: 240px;
+  overflow-y: auto;
+  font-size: .85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-  .bot-msg {
-    background: #1e293b;
-    padding: 8px;
-    border-radius: 10px;
-    margin-bottom: 6px;
-  }
+.bot-msg {
+  background: #1e293b;
+  padding: 8px 10px;
+  border-radius: 12px;
+  max-width: 85%;
+}
 
-  .user-msg {
-    background: #2563eb;
-    padding: 8px;
-    border-radius: 10px;
-    margin-bottom: 6px;
-    text-align: right;
-  }
+.user-msg {
+  background: linear-gradient(135deg,#2563eb,#38bdf8);
+  padding: 8px 10px;
+  border-radius: 12px;
+  align-self: flex-end;
+  max-width: 85%;
+}
 
-  .chatbot-input {
-    display: flex;
-    border-top: 1px solid #1f2937;
-  }
+.chatbot-input {
+  display: flex;
+  border-top: 1px solid #1f2937;
+  background: #020617;
+}
 
-  .chatbot-input input {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    outline: none;
-    background: #020617;
-    color: #e5e7eb;
-  }
+.chatbot-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e5e7eb;
+}
 
-  .chatbot-input button {
-    border: none;
-    background: #38bdf8;
-    padding: 0 12px;
-    cursor: pointer;
-  }
+.chatbot-input button {
+  border: none;
+  background: linear-gradient(135deg,#38bdf8,#2563eb);
+  padding: 0 16px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+}
 </style>
 
 <div class="chatbot-btn" id="chatbotBtn">💬</div>
@@ -1716,57 +1726,69 @@
   </div>
   <div class="chatbot-input">
     <input type="text" id="chatInput" placeholder="Escribe aquí..." />
-    <button onclick="sendMessage()">➤</button>
+    <button id="sendBtn">➤</button>
   </div>
 </div>
 
 <script>
-  const chatbotBtn = document.getElementById("chatbotBtn");
-  const chatbotBox = document.getElementById("chatbotBox");
-  const chatMessages = document.getElementById("chatMessages");
-  const chatInput = document.getElementById("chatInput");
+const chatbotBtn = document.getElementById("chatbotBtn");
+const chatbotBox = document.getElementById("chatbotBox");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
 
-  chatbotBtn.addEventListener("click", () => {
-    chatbotBox.style.display =
-      chatbotBox.style.display === "flex" ? "none" : "flex";
-  });
+chatbotBtn.addEventListener("click", () => {
+  chatbotBox.style.display =
+    chatbotBox.style.display === "flex" ? "none" : "flex";
+  chatInput.focus();
+});
 
-  function sendMessage() {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
+// ✅ ENVIAR CON ENTER
+chatInput.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    e.preventDefault();
+    sendMessage();
+  }
+});
 
-    chatMessages.innerHTML += `<div class="user-msg">${msg}</div>`;
-    chatInput.value = "";
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+sendBtn.addEventListener("click", sendMessage);
 
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+
+  chatMessages.innerHTML += `<div class="user-msg">${msg}</div>`;
+  chatInput.value = "";
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  setTimeout(() => {
+    botResponse(msg.toLowerCase());
+  }, 600);
+}
+
+function botResponse(text) {
+  let response = "No entendí bien 🤔 ¿Quieres hablar por WhatsApp?";
+
+  if (text.includes("precio") || text.includes("plan")) {
+    response = "Tenemos planes desde $150. ¿Te paso a WhatsApp para asesorarte?";
+  }
+
+  if (text.includes("tienda")) {
+    response = "Sí, hacemos tiendas online con pagos, stock y panel admin.";
+  }
+
+  if (text.includes("contacto") || text.includes("whatsapp") || text.includes("si")) {
+    response = "Perfecto, te paso el WhatsApp 👇";
     setTimeout(() => {
-      botResponse(msg.toLowerCase());
-    }, 600);
+      window.open("https://wa.me/5493483466199", "_blank");
+    }, 1200);
   }
 
-  function botResponse(text) {
-    let response = "No entendí bien 🤔 ¿Quieres hablar por WhatsApp?";
-
-    if (text.includes("precio") || text.includes("plan")) {
-      response = "Tenemos planes desde $150. ¿Te paso a WhatsApp para asesorarte?";
-    }
-
-    if (text.includes("tienda")) {
-      response = "Sí, hacemos tiendas online con pagos y stock.";
-    }
-
-    if (text.includes("contacto") || text.includes("whatsapp")) {
-      response = "Perfecto, te paso el WhatsApp 👇";
-      setTimeout(() => {
-        window.open("https://wa.me/5493483466199", "_blank");
-      }, 1200);
-    }
-
-    chatMessages.innerHTML += `<div class="bot-msg">${response}</div>`;
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
+  chatMessages.innerHTML += `<div class="bot-msg">${response}</div>`;
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 </script>
-<!-- ================= FIN CHATBOT ================= -->
+<!-- ================= FIN CHATBOT PRO ================= -->
 
 </body>
 </html>
