@@ -1048,11 +1048,6 @@
   <!-- Fondo animado -->
   <canvas id="bg-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
 
-<!-- WhatsApp flotante -->
-<a class="whatsapp-float" href="https://wa.me/5493483466199?text=Hola%20quiero%20una%20pagina%20web%20para%20mi%20negocio.%20Vengo%20desde%20WEBNIXIA" target="_blank" aria-label="Contactar por WhatsApp">
-  <span>🟢</span>
-</a>
-
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="navbar-inner container">
@@ -1622,173 +1617,157 @@
 
     animateParticles();
   </script>
-<!-- ================= CHATBOT NIXIA PRO ================= -->
+<!-- ================= CHATBOT NIXIA AUTO PRO ================= -->
 <style>
-.chatbot-btn {
+.chatbot-launch {
   position: fixed;
-  right: 18px;
-  bottom: 80px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#38bdf8,#2563eb);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 70;
-  box-shadow: 0 14px 35px rgba(56,189,248,.6);
-  font-size: 1.4rem;
-  transition: transform .2s ease;
-}
-.chatbot-btn:hover { transform: scale(1.08); }
-
-.chatbot-box {
-  position: fixed;
-  right: 18px;
-  bottom: 140px;
-  width: 320px;
+  right: 20px;
+  bottom: 20px;
+  width: 360px;
+  max-width: 92%;
   background: #020617;
   border: 1px solid #1f2937;
-  border-radius: 18px;
-  box-shadow: 0 20px 55px rgba(0,0,0,.85);
-  display: none;
-  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.9);
   overflow: hidden;
-  z-index: 70;
-  animation: chatUp .25s ease;
+  z-index: 999;
+  animation: chatIn .6s ease;
 }
-@keyframes chatUp { from {opacity:0; transform:translateY(10px);} }
 
-.chatbot-header {
+@keyframes chatIn {
+  from {opacity:0; transform:translateY(40px) scale(.95);}
+}
+
+.chat-header {
   background: linear-gradient(135deg,#1d4ed8,#38bdf8);
-  padding: 12px;
-  font-size: .9rem;
+  padding: 14px;
+  font-size: .95rem;
   font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.chatbot-messages {
-  padding: 12px;
-  height: 240px;
+.chat-close {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.chat-body {
+  padding: 14px;
+  height: 260px;
   overflow-y: auto;
-  font-size: .85rem;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  font-size: .9rem;
 }
 
-.bot-msg {
+.bot {
   background: #1e293b;
-  padding: 8px 10px;
-  border-radius: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
   max-width: 85%;
 }
 
-.user-msg {
+.user {
   background: linear-gradient(135deg,#2563eb,#38bdf8);
-  padding: 8px 10px;
-  border-radius: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
   align-self: flex-end;
   max-width: 85%;
 }
 
-.chatbot-input {
+.chat-input {
   display: flex;
   border-top: 1px solid #1f2937;
-  background: #020617;
 }
 
-.chatbot-input input {
+.chat-input input {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border: none;
   outline: none;
-  background: transparent;
+  background: #020617;
   color: #e5e7eb;
 }
 
-.chatbot-input button {
-  border: none;
+.chat-input button {
   background: linear-gradient(135deg,#38bdf8,#2563eb);
-  padding: 0 16px;
+  border: none;
+  color: white;
+  padding: 0 18px;
   cursor: pointer;
-  color: #fff;
-  font-size: 1rem;
 }
 </style>
 
-<div class="chatbot-btn" id="chatbotBtn">💬</div>
-
-<div class="chatbot-box" id="chatbotBox">
-  <div class="chatbot-header">Asistente WEBNIXIA</div>
-  <div class="chatbot-messages" id="chatMessages">
-    <div class="bot-msg">Hola 👋 ¿En qué puedo ayudarte?</div>
+<div class="chatbot-launch" id="chatBotLive">
+  <div class="chat-header">
+    Asistente WEBNIXIA
+    <span class="chat-close" onclick="document.getElementById('chatBotLive').style.display='none'">×</span>
   </div>
-  <div class="chatbot-input">
-    <input type="text" id="chatInput" placeholder="Escribe aquí..." />
-    <button id="sendBtn">➤</button>
+
+  <div class="chat-body" id="chatBox">
+    <div class="bot">👋 ¡Hola! Soy el asistente de WEBNIXIA.</div>
+    <div class="bot">¿Quieres una página, una tienda online o un sistema?</div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="chatLiveInput" placeholder="Escribe tu mensaje..." />
+    <button onclick="sendLive()">➤</button>
   </div>
 </div>
 
 <script>
-const chatbotBtn = document.getElementById("chatbotBtn");
-const chatbotBox = document.getElementById("chatbotBox");
-const chatMessages = document.getElementById("chatMessages");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("chatLiveInput");
+const chat = document.getElementById("chatBox");
 
-chatbotBtn.addEventListener("click", () => {
-  chatbotBox.style.display =
-    chatbotBox.style.display === "flex" ? "none" : "flex";
-  chatInput.focus();
-});
-
-// ✅ ENVIAR CON ENTER
-chatInput.addEventListener("keydown", function(e){
+// ENVIAR CON ENTER
+input.addEventListener("keydown", e => {
   if(e.key === "Enter"){
     e.preventDefault();
-    sendMessage();
+    sendLive();
   }
 });
 
-sendBtn.addEventListener("click", sendMessage);
+function sendLive(){
+  const text = input.value.trim();
+  if(!text) return;
 
-function sendMessage() {
-  const msg = chatInput.value.trim();
-  if (!msg) return;
+  chat.innerHTML += `<div class="user">${text}</div>`;
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
 
-  chatMessages.innerHTML += `<div class="user-msg">${msg}</div>`;
-  chatInput.value = "";
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-
-  setTimeout(() => {
-    botResponse(msg.toLowerCase());
-  }, 600);
+  setTimeout(() => botLive(text.toLowerCase()), 700);
 }
 
-function botResponse(text) {
-  let response = "No entendí bien 🤔 ¿Quieres hablar por WhatsApp?";
+function botLive(text){
+  let r = "Perfecto ✅ ¿Quieres que te asesore por WhatsApp?";
 
-  if (text.includes("precio") || text.includes("plan")) {
-    response = "Tenemos planes desde $150. ¿Te paso a WhatsApp para asesorarte?";
-  }
+  if(text.includes("precio") || text.includes("plan"))
+    r = "Tenemos webs desde $150 y sistemas avanzados desde $750.";
 
-  if (text.includes("tienda")) {
-    response = "Sí, hacemos tiendas online con pagos, stock y panel admin.";
-  }
+  if(text.includes("tienda"))
+    r = "Las tiendas incluyen carrito, pagos y panel de productos.";
 
-  if (text.includes("contacto") || text.includes("whatsapp") || text.includes("si")) {
-    response = "Perfecto, te paso el WhatsApp 👇";
-    setTimeout(() => {
+  if(text.includes("si") || text.includes("whatsapp")){
+    r = "Genial, te paso directo con un asesor 👇";
+    setTimeout(()=> {
       window.open("https://wa.me/5493483466199", "_blank");
     }, 1200);
   }
 
-  chatMessages.innerHTML += `<div class="bot-msg">${response}</div>`;
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  chat.innerHTML += `<div class="bot">${r}</div>`;
+  chat.scrollTop = chat.scrollHeight;
 }
+
+// ✅ SE ABRE SOLO AL ENTRAR
+setTimeout(() => {
+  document.getElementById("chatBotLive").style.display = "block";
+  input.focus();
+}, 1200);
 </script>
-<!-- ================= FIN CHATBOT PRO ================= -->
+<!-- ================= FIN CHATBOT AUTO PRO ================= -->
 
 </body>
 </html>
