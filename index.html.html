@@ -1756,16 +1756,26 @@ const res = await fetch("https://webnixia-bot.onrender.com/chat", {
   })
 });
 
-    const data = await res.json();
-    const bots = document.querySelectorAll(".bot");
-    bots[bots.length - 1].innerHTML = data.reply;
+const data = await res.json();
+const bots = document.querySelectorAll(".bot");
+bots[bots.length - 1].innerHTML = data.reply;
 
-    // ✅ Si la IA menciona WhatsApp, lo abre solo
-    if (data.reply.toLowerCase().includes("whatsapp")) {
-      setTimeout(() => {
-        window.open("https://wa.me/5493483466199", "_blank");
-      }, 1200);
-    }
+// ✅ DETECTAR LINK DE DEMO Y ABRIRLO AUTOMÁTICAMENTE
+const urlRegex = /(https?:\/\/[^\s]+)/g;
+const links = data.reply.match(urlRegex);
+
+if (links && links.length > 0) {
+  setTimeout(() => {
+    window.open(links[0], "_blank"); // 🔥 Abre la demo automáticamente
+  }, 900);
+}
+
+// ✅ Si la IA menciona WhatsApp, lo abre solo
+if (data.reply.toLowerCase().includes("whatsapp")) {
+  setTimeout(() => {
+    window.open("https://wa.me/5493483466199", "_blank");
+  }, 1500);
+}
 
   } catch (error) {
     const bots = document.querySelectorAll(".bot");
