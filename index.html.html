@@ -1759,20 +1759,22 @@ const data = await res.json();
 const bots = document.querySelectorAll(".bot");
 bots[bots.length - 1].innerHTML = data.reply;
 
-// ✅ DETECTAR LINK DE DEMO Y ABRIRLO AUTOMÁTICAMENTE
-const urlRegex = /(https?:\/\/[^\s]+)/g;
+// ✅ DETECTAR LINK AUNQUE VENGA ENTRE PARÉNTESIS
+const urlRegex = /\(?https?:\/\/[^\s\)]+/g;
 const links = data.reply.match(urlRegex);
 
 if (links && links.length > 0) {
-  // ✅ LIMPIAR EL LINK DE CARACTERES RAROS
   let cleanUrl = links[0]
+    .replace("(", "")
     .replace(")", "")
-    .replace(".", "")
+    .replace(").", "")
     .trim();
+
+  console.log("Abriendo demo:", cleanUrl); // para debug
 
   setTimeout(() => {
     window.open(cleanUrl, "_blank");
-  }, 900);
+  }, 800);
 }
 
 
