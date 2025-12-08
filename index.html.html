@@ -1348,130 +1348,78 @@
   </section>
 
   <!-- PRICING + PAGOS -->
-  <section id="pricing">
-    <div class="container">
-      <h2 class="section-title">Planes listos para ofrecer</h2>
-      <p class="section-subtitle">
-        Muestra a tus clientes planes claros. Puedes cambiar precios, monedas y características cuando quieras.
-      </p>
+<section id="pricing">
+  <div class="container">
+    <h2 class="section-title">Planes claros, pensados para tu negocio</h2>
+    <p class="section-subtitle">
+      Elegí el plan que mejor se adapta a tu proyecto. Todos nuestros sitios están diseñados para generar consultas, dar confianza y ayudarte a vender más.
+    </p>
 
-      <div class="pricing-grid reveal">
-        <div class="pricing-card">
-          <span class="pricing-label">Emprendedores</span>
-          <div class="pricing-name">Plan Básico</div>
-          <div class="pricing-price">$ 150<span> / única vez</span></div>
-          <ul class="pricing-list">
-            <li>• 1 página (scroll único).</li>
-            <li>• Sección servicios + contacto.</li>
-            <li>• Adaptada a móvil.</li>
-            <li>• Botón de WhatsApp.</li>
-          </ul>
-          <button class="btn btn-ghost" onclick="scrollToSection('contacto')">Quiero este plan</button>
-        </div>
+    <div class="pricing-grid reveal">
 
-        <div class="pricing-card highlight">
-          <span class="pricing-label">Más vendido</span>
-          <div class="pricing-name">Plan Profesional</div>
-          <div class="pricing-price">$ 350<span> / única vez</span></div>
-          <ul class="pricing-list">
-            <li>• Hasta 5 secciones o páginas.</li>
-            <li>• Formulario de contacto conectado a backend.</li>
-            <li>• Integración de pago (ej: MercadoPago / PayPal).</li>
-            <li>• Optimización básica SEO.</li>
-          </ul>
-          <button class="btn btn-primary" onclick="scrollToSection('contacto')">Contratar</button>
-        </div>
+      <!-- PLAN BÁSICO -->
+      <div class="pricing-card">
+        <span class="pricing-label">Para empezar</span>
+        <div class="pricing-name">Plan Básico</div>
+        <div class="pricing-price">$ 150<span> / pago único</span></div>
 
-        <div class="pricing-card">
-          <span class="pricing-label">Empresas / SaaS</span>
-          <div class="pricing-name">Plan Full + Sistema</div>
-          <div class="pricing-price">$ 750+<span> / proyecto</span></div>
-          <ul class="pricing-list">
-            <li>• Web completa + sistema en Python.</li>
-            <li>• Dashboard de administración.</li>
-            <li>• Integraciones (APIs, pagos, etc.).</li>
-            <li>• Soporte y mantenimiento.</li>
-          </ul>
-          <button class="btn btn-ghost" onclick="scrollToSection('contacto')">Hablar del proyecto</button>
-        </div>
+        <ul class="pricing-list">
+          <li>• Página profesional tipo one-page.</li>
+          <li>• Sección servicios + contacto.</li>
+          <li>• Diseño adaptable a celular.</li>
+          <li>• Botón de WhatsApp visible.</li>
+        </ul>
+
+        <button class="btn btn-ghost" onclick="scrollToSection('contacto')">
+          Quiero este plan
+        </button>
       </div>
 
-      <div class="payment-badges">
-        <div class="payment-badge">💳 MercadoPago (a integrar)</div>
-        <div class="payment-badge">💳 PayPal / Stripe</div>
-        <div class="payment-badge">💵 Transferencia / Crypto</div>
+      <!-- PLAN PROFESIONAL -->
+      <div class="pricing-card highlight">
+        <span class="pricing-label">Más elegido</span>
+        <div class="pricing-name">Plan Profesional</div>
+        <div class="pricing-price">$ 350<span> / pago único</span></div>
+
+        <ul class="pricing-list">
+          <li>• Hasta 5 secciones o páginas internas.</li>
+          <li>• Diseño personalizado según tu negocio.</li>
+          <li>• Formulario de contacto funcional.</li>
+          <li>• Integración con WhatsApp.</li>
+          <li>• Optimización básica para Google (SEO).</li>
+        </ul>
+
+        <button class="btn btn-primary" onclick="scrollToSection('contacto')">
+          Solicitar este plan
+        </button>
       </div>
-    </div>
-  </section>
 
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <div class="container">
-      <h2 class="section-title">Hagamos tu próxima web</h2>
-      <p class="section-subtitle">
-        Completa el formulario y te responderé con un presupuesto orientativo y próximos pasos.
-      </p>
+      <!-- PLAN FULL -->
+      <div class="pricing-card">
+        <span class="pricing-label">Empresas</span>
+        <div class="pricing-name">Plan Full + Sistema</div>
+        <div class="pricing-price">$ 750+<span> / proyecto</span></div>
 
-      <div class="contact-grid reveal">
-        <div class="contact-card">
-          <form id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="field">
-                <label for="nombre">Nombre y apellido</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" />
-                <div class="error-msg" id="errNombre">Por favor ingresa tu nombre.</div>
-              </div>
-              <div class="field">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="contacto.webnixia@gmail.com" />
-                <div class="error-msg" id="errEmail">Ingresa un email válido.</div>
-              </div>
-            </div>
-            <div class="field">
-              <label for="tipo">Tipo de proyecto</label>
-              <select id="tipo" name="tipo">
-                <option value="">Selecciona una opción</option>
-                <option value="web">Página web corporativa</option>
-                <option value="tienda">Tienda online</option>
-                <option value="landing">Landing page</option>
-                <option value="sistema">Sistema en Python</option>
-                <option value="otro">Otro</option>
-              </select>
-              <div class="error-msg" id="errTipo">Selecciona el tipo de proyecto.</div>
-            </div>
-            <div class="field">
-              <label for="mensaje">Cuéntame de tu proyecto</label>
-              <textarea id="mensaje" name="mensaje" placeholder="Ej: Necesito una página para mi negocio de..."></textarea>
-              <div class="error-msg" id="errMensaje">Describe brevemente tu proyecto.</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar consulta</button>
-            <div class="success-banner" id="successBanner">
-              ¡Gracias! Tu consulta fue registrada (demo). Aquí podrías conectar con un backend en Python que guarde el lead y envíe un mail.
-            </div>
-          <div class="contact-hint">
-              * Un asesor de nuestro equipo se comunicará contigo para brindarte más información.
-          </div>
-          </form>
-        </div>
+        <ul class="pricing-list">
+          <li>• Web completa totalmente personalizada.</li>
+          <li>• Sistema interno (turnos, pedidos, clientes, etc.).</li>
+          <li>• Integraciones con pagos y plataformas.</li>
+          <li>• Soporte técnico y mantenimiento.</li>
+        </ul>
 
-        <div class="contact-info">
-          <p>
-            También puedes escribirme directamente por:
-          </p>
-          <ul>
-            <li><b>WhatsApp:</b> +54 3483466199</li>
-            <li><b>Email:</b> contacto.webnixia@gmail.com</li>
-          </ul>
-          <p style="margin-top:14px;">
-             Atención 24 hs
-          </p>
-          <p style="margin-top:14px; font-size:0.85rem;">
-          Brindamos asesoramiento personalizado para cada proyecto, adaptado a las necesidades de tu negocio.
-          </p>
-       </div>
+        <button class="btn btn-ghost" onclick="scrollToSection('contacto')">
+          Hablar del proyecto
+        </button>
       </div>
     </div>
-  </section>
+
+    <div class="payment-badges">
+      <div class="payment-badge">💳 Pagos online</div>
+      <div class="payment-badge">💵 Transferencia</div>
+      <div class="payment-badge">📄 Facturación</div>
+    </div>
+  </div>
+</section>
 
   <!-- FOOTER -->
 <footer>
