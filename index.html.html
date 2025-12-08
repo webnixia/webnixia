@@ -1765,10 +1765,17 @@ const urlRegex = /(https?:\/\/[^\s]+)/g;
 const links = data.reply.match(urlRegex);
 
 if (links && links.length > 0) {
+  // ✅ LIMPIAR EL LINK DE CARACTERES RAROS
+  let cleanUrl = links[0]
+    .replace(")", "")
+    .replace(".", "")
+    .trim();
+
   setTimeout(() => {
-    window.open(links[0], "_blank"); // 🔥 Abre la demo automáticamente
+    window.open(cleanUrl, "_blank");
   }, 900);
 }
+
 
 // ✅ Si la IA menciona WhatsApp, lo abre solo
 if (data.reply.toLowerCase().includes("whatsapp")) {
