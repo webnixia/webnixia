@@ -1556,8 +1556,7 @@
       { threshold: 0.12 }
     );
     revealElements.forEach((el) => observer.observe(el));
-
-    <script>
+<script>
 const form = document.getElementById("contactForm");
 const errNombre = document.getElementById("errNombre");
 const errEmail = document.getElementById("errEmail");
@@ -1569,75 +1568,67 @@ function validarEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const nombre = form.nombre.value.trim();
-  const email = form.email.value.trim();
-  const tipo = form.tipo.value.trim();
-  const mensaje = form.mensaje.value.trim();
+    const nombre = form.nombre.value.trim();
+    const email = form.email.value.trim();
+    const tipo = form.tipo.value.trim();
+    const mensaje = form.mensaje.value.trim();
 
-  let valido = true;
+    let valido = true;
 
-  if (!nombre) {
-    errNombre.style.display = "block";
-    valido = false;
-  } else errNombre.style.display = "none";
+    if (!nombre) {
+      errNombre.style.display = "block";
+      valido = false;
+    } else errNombre.style.display = "none";
 
-  if (!email || !validarEmail(email)) {
-    errEmail.style.display = "block";
-    valido = false;
-  } else errEmail.style.display = "none";
+    if (!email || !validarEmail(email)) {
+      errEmail.style.display = "block";
+      valido = false;
+    } else errEmail.style.display = "none";
 
-  if (!tipo) {
-    errTipo.style.display = "block";
-    valido = false;
-  } else errTipo.style.display = "none";
+    if (!tipo) {
+      errTipo.style.display = "block";
+      valido = false;
+    } else errTipo.style.display = "none";
 
-  if (!mensaje || mensaje.length < 10) {
-    errMensaje.style.display = "block";
-    valido = false;
-  } else errMensaje.style.display = "none";
+    if (!mensaje || mensaje.length < 10) {
+      errMensaje.style.display = "block";
+      valido = false;
+    } else errMensaje.style.display = "none";
 
-  if (!valido) return;
+    if (!valido) return;
 
-  try {
-    const res = await fetch("https://webnixia-bot.onrender.com/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre,
-        email,
-        tipo,
-        mensaje
-      })
-    });
+    try {
+      const res = await fetch("https://webnixia-bot.onrender.com/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre,
+          email,
+          tipo,
+          mensaje
+        })
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.ok) {
-      successBanner.style.display = "block";
-      form.reset();
-    } else {
-      alert("Error al guardar el contacto.");
+      if (data.ok) {
+        successBanner.style.display = "block";
+        form.reset();
+      } else {
+        alert("Error al guardar el contacto.");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Error de conexión con el servidor.");
     }
-
-  } catch (err) {
-    console.error(err);
-    alert("Error de conexión con el servidor.");
-  }
-});
+  });
+}
 </script>
-
-      if (!valido) return;
-
-      // Aquí iría la llamada real a tu backend (fetch/axios)
-      successBanner.style.display = "block";
-
-      // Limpiar demo
-      form.reset();
-    });
-  </script>
 
   <script>
     // Fondo animado de partículas
