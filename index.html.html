@@ -2101,6 +2101,13 @@ window.addEventListener("scroll", () => {
     chatOpenedAuto = true;
   }
 });
+// === CERRAR CHAT SI EL USUARIO SUBE ARRIBA ===
+window.addEventListener("scroll", () => {
+  if (window.scrollY < 120) {
+    chatWidget.style.display = "none";
+    chatToggle.style.display = "flex";
+  }
+});
 
 </script>
 
