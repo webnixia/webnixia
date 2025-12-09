@@ -338,6 +338,108 @@
       background: rgba(22, 163, 74, 0.12);
       color: #16a34a;
     }
+.hero2025 {
+  padding: 130px 0;
+  position: relative;
+  background: radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
+              radial-gradient(circle at bottom right, #a855f7 0, transparent 55%);
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-label {
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: #60a5fa;
+}
+
+.hero-title2025 {
+  font-size: 3.6rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+.hero-title2025 span {
+  background: linear-gradient(135deg, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-sub2025 {
+  max-width: 480px;
+  font-size: 1.15rem;
+  color: #9ca3af;
+  margin-bottom: 32px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+}
+
+.btn-glow {
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  padding: 12px 30px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(59,130,246,.45);
+  transition: all .25s ease;
+}
+
+.btn-glow:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 35px rgba(96,165,250,.65);
+}
+
+.btn-outline2025 {
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid #64748b;
+  background: transparent;
+  color: #e2e8f0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.btn-outline2025:hover {
+  background: rgba(255,255,255,.07);
+  border-color: #38bdf8;
+}
+
+.hero-right {
+  display: flex;
+  justify-content: center;
+}
+
+.floating-card {
+  width: 360px;
+  height: 260px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
 
     /* ========== SECTIONS GENERIC ========== */
     section {
@@ -1153,68 +1255,35 @@
   </header>
 
   <!-- HERO -->
-<section class="hero">
-  <div class="container hero-grid">
-    <div class="reveal">
-      <div class="hero-kicker">Diseño Web Profesional</div>
+<!-- HERO 2025 -->
+<section class="hero2025">
+  <div class="container hero-inner">
+    
+    <!-- LADO IZQUIERDO -->
+    <div class="hero-left">
+      <span class="hero-label">Desarrollo Web Premium 2025</span>
 
-      <h1 class="hero-title">
-        Webs <span class="accent">profesionales</span> diseñadas para atraer clientes y hacer crecer tu negocio.
+      <h1 class="hero-title2025">
+        Sitios web <span>profesionales</span> creados para atraer clientes y escalar tu negocio.
       </h1>
 
-      <p class="hero-subtitle">
-        Creamos páginas modernas y efectivas para peluquerías, restaurantes, gimnasios, carnicerías, emprendedores y negocios reales. Todo conectado directamente a WhatsApp para que recibas consultas todos los días.
+      <p class="hero-sub2025">
+        Diseños modernos, rápidos y optimizados para convertir visitantes en clientes reales. La presencia digital que tu negocio merece.
       </p>
 
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="scrollToSection('contacto')">Quiero mi web</button>
-        <button class="btn btn-ghost" onclick="scrollToSection('portfolio')">Ver demos</button>
-      </div>
-
-      <div class="hero-meta">
-        <span>⚡ Entrega rápida</span>
-        <span>🎯 Enfocadas en conversión</span>
-        <span>📱 Perfectas en cualquier dispositivo</span>
+      <div class="hero-buttons">
+        <button class="btn-glow" onclick="scrollToSection('contacto')">Quiero mi web</button>
+        <button class="btn-outline2025" onclick="scrollToSection('portfolio')">Ver demos</button>
       </div>
     </div>
 
-    <div class="hero-card reveal">
-      <div class="hero-card-header">
-        <div>
-          <div class="hero-card-title">Sistema de gestión (demo)</div>
-          <small style="color:#9ca3af;">Vista de ejemplo del panel que entregamos a nuestros clientes</small>
-        </div>
-        <span class="hero-tag">Dashboard</span>
-      </div>
-
-      <div class="hero-badges">
-        <div class="hero-badge-item">
-          <b>Pedidos este mes</b><br />
-          23 nuevas consultas
-        </div>
-        <div class="hero-badge-item">
-          <b>Conversión</b><br />
-          68% de contacto efectivo
-        </div>
-      </div>
-
-      <div class="hero-stat-row">
-        <span>Ingresos estimados:</span>
-        <b>USD 2.300 / mes</b>
-      </div>
-
-      <div class="hero-stat-row">
-        <span>Atención automatizada:</span>
-        <span>WhatsApp + formularios + gestión de clientes</span>
-      </div>
-
-      <div class="hero-pill">
-        • Este panel es una muestra del sistema de gestión profesional que entregamos para administrar pedidos, clientes y proyectos.
-      </div>
+    <!-- LADO DERECHO (IMAGEN / CARD ANIMADA) -->
+    <div class="hero-right">
+      <div class="floating-card"></div>
     </div>
+
   </div>
 </section>
-
 
   <!-- SERVICIOS -->
  <section id="servicios">
