@@ -1886,14 +1886,15 @@ animateParticles();
 </script>
 
 <!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
+<!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
 <style>
 .chatbot-launch {
   position: fixed;
   right: 20px;
-  bottom: 60px; /* ← ahora sí baja */
+  bottom: 60px;
   width: 360px;
   max-width: 92%;
-  background: rgba(2, 6, 23, 0.72); /* efecto vidrio */
+  background: rgba(2, 6, 23, 0.72);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 20px;
@@ -1903,7 +1904,8 @@ animateParticles();
   animation: chatIn .6s ease;
   display: none;
 }
-/* ==== BOTÓN FLOTANTE PREMIUM ==== */
+
+/* Botón */
 .chat-toggle-btn {
   position: fixed;
   right: 22px;
@@ -1922,7 +1924,6 @@ animateParticles();
   z-index: 999;
   transition: transform .2s ease, box-shadow .2s ease;
 }
-
 .chat-toggle-btn:hover {
   transform: scale(1.08);
   box-shadow: 0 22px 55px rgba(56,189,248,.55);
@@ -1995,10 +1996,14 @@ animateParticles();
 }
 </style>
 
+<!-- Botón para abrir chat (DEBE ESTAR ANTES DEL SCRIPT) -->
+<div id="chatToggleBtn" class="chat-toggle-btn">💬</div>
+
+<!-- Ventana del chat -->
 <div class="chatbot-launch" id="chatBotLive">
   <div class="chat-header">
     Asistente WEBNIXIA
-    <span class="chat-close" onclick="document.getElementById('chatBotLive').style.display='none'">×</span>
+    <span class="chat-close">×</span>
   </div>
 
   <div class="chat-body" id="chatBox">
@@ -2013,35 +2018,26 @@ animateParticles();
 </div>
 
 <script>
-setTimeout(() => {
-  const wa = document.querySelector(".whatsapp-float");
-  if (wa) {
-    wa.style.transform = "scale(1.15)";
-  }
-}, 10000);
-</script>
-
-<script>
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
 const chatToggle = document.getElementById("chatToggleBtn");
 
-// ==== ABRIR CHAT ====
+// Abrir chat
 chatToggle.addEventListener("click", () => {
   chatWidget.style.display = "block";
-  chatToggle.style.display = "none"; // ocultar botón al abrir
+  chatToggle.style.display = "none";
 });
 
-// ==== CERRAR CHAT ====
+// Cerrar chat
 document.querySelector(".chat-close").addEventListener("click", () => {
   chatWidget.style.display = "none";
   setTimeout(() => {
-    chatToggle.style.display = "flex"; // aparece de vuelta
+    chatToggle.style.display = "flex";
   }, 300);
 });
 
-// ==== ENTER PARA ENVIAR ====
+// Enter para enviar
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -2075,18 +2071,6 @@ async function botLive(userText) {
     const bots = document.querySelectorAll(".bot");
     bots[bots.length - 1].innerHTML = data.reply;
 
-    const urlRegex = /\(?https?:\/\/[^\s\)]+/g;
-    const links = data.reply.match(urlRegex);
-
-    if (links && links.length > 0) {
-      let cleanUrl = links[0].replace(/[()]/g, "").trim();
-      setTimeout(() => window.open(cleanUrl, "_blank"), 800);
-    }
-
-    if (data.reply.toLowerCase().includes("whatsapp")) {
-      setTimeout(() => window.open("https://wa.me/5493483466199", "_blank"), 1500);
-    }
-
   } catch (error) {
     const bots = document.querySelectorAll(".bot");
     bots[bots.length - 1].innerHTML = "❌ Error de conexión con el servidor.";
@@ -2095,6 +2079,8 @@ async function botLive(userText) {
   chat.scrollTop = chat.scrollHeight;
 }
 </script>
+<!-- ================= FIN CHATBOT ================= -->
+
 
 <!-- ================= FIN CHATBOT WEBNIXIA ================= -->
 
