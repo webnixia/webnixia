@@ -1839,6 +1839,7 @@ const observer = new IntersectionObserver(entries => {
 revealElements.forEach(el => observer.observe(el));
 </script>
 
+<!-- ========== FONDO DE PARTÍCULAS ========== -->
 <script>
 // Fondo partículas
 const canvas = document.getElementById("bg-canvas");
@@ -1885,7 +1886,10 @@ function animateParticles() {
 animateParticles();
 </script>
 
-<!-- =============== CHATBOT WINDOW (FALTABA COMPLETO) =============== -->
+<!-- ========== BOTÓN PARA ABRIR CHAT ========== -->
+<div id="chatToggleBtn" class="chat-toggle-btn">💬</div>
+
+<!-- =============== VENTANA DEL CHATBOT =============== -->
 <div class="chatbot-launch" id="chatBotLive">
   <div class="chat-header">
     Asistente WEBNIXIA
@@ -1903,7 +1907,7 @@ animateParticles();
   </div>
 </div>
 
-<!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
+<!-- =============== ESTILOS DEL CHATBOT =============== -->
 <style>
 .chatbot-launch {
   position: fixed;
@@ -1922,7 +1926,7 @@ animateParticles();
   display: none;
 }
 
-/* Botón */
+/* Botón flotante */
 .chat-toggle-btn {
   position: fixed;
   right: 22px;
@@ -2013,26 +2017,21 @@ animateParticles();
 }
 </style>
 
-<!-- ================= FIN CHATBOT WEBNIXIA ================= -->
-
-<a href="https://wa.me/5493483466199" target="_blank" class="whatsapp-float pulse">
-  <span>💬</span>
-  <div class="wa-tooltip">¿Hablamos ahora?</div>
-</a>
+<!-- =============== SCRIPT DEL CHATBOT =============== -->
 <script>
-// ======== CHATBOT SCRIPT DEBE IR AL FINAL ========
+// ======== ELEMENTOS ========
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
 const chatToggle = document.getElementById("chatToggleBtn");
 
-// ==== ABRIR CHAT ====
+// ======== ABRIR CHAT ========
 chatToggle.addEventListener("click", () => {
   chatWidget.style.display = "block";
   chatToggle.style.display = "none";
 });
 
-// ==== CERRAR CHAT ====
+// ======== CERRAR CHAT ========
 document.querySelector(".chat-close").addEventListener("click", () => {
   chatWidget.style.display = "none";
   setTimeout(() => {
@@ -2040,7 +2039,7 @@ document.querySelector(".chat-close").addEventListener("click", () => {
   }, 300);
 });
 
-// ==== ENTER PARA ENVIAR ====
+// ======== ENTER PARA ENVIAR ========
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -2048,7 +2047,7 @@ input.addEventListener("keydown", e => {
   }
 });
 
-// ==== ENVÍO ====
+// ======== ENVÍO DEL USUARIO ========
 function sendLive() {
   const text = input.value.trim();
   if (!text) return;
@@ -2057,10 +2056,10 @@ function sendLive() {
   input.value = "";
   chat.scrollTop = chat.scrollHeight;
 
-  setTimeout(() => botLive(text), 400);
+  setTimeout(() => botLive(text), 300);
 }
 
-// ==== BOT ====
+// ======== BOT WEBNIXIA ========
 async function botLive(userText) {
   chat.innerHTML += `<div class="bot">🤖 Pensando...</div>`;
   chat.scrollTop = chat.scrollHeight;
@@ -2084,7 +2083,6 @@ async function botLive(userText) {
   chat.scrollTop = chat.scrollHeight;
 }
 </script>
-
 
 </body>
 </html>
