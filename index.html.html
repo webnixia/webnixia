@@ -1885,7 +1885,24 @@ function animateParticles() {
 animateParticles();
 </script>
 
-<!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
+<!-- =============== CHATBOT WINDOW (FALTABA COMPLETO) =============== -->
+<div class="chatbot-launch" id="chatBotLive">
+  <div class="chat-header">
+    Asistente WEBNIXIA
+    <span class="chat-close">×</span>
+  </div>
+
+  <div class="chat-body" id="chatBox">
+    <div class="bot">👋 ¡Hola! Soy el asistente de WEBNIXIA.</div>
+    <div class="bot">¿Querés una página web, una tienda online o un sistema?</div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="chatLiveInput" placeholder="Escribí tu mensaje..." />
+    <button onclick="sendLive()">➤</button>
+  </div>
+</div>
+
 <!-- ================= CHATBOT WEBNIXIA INTELIGENTE ================= -->
 <style>
 .chatbot-launch {
