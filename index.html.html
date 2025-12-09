@@ -1885,7 +1885,6 @@ function animateParticles() {
 
 animateParticles();
 </script>
-
 <!-- ========== BOTÓN PARA ABRIR CHAT ========== -->
 <div id="chatToggleBtn" class="chat-toggle-btn">💬</div>
 
@@ -1945,6 +1944,7 @@ animateParticles();
   z-index: 999;
   transition: transform .2s ease, box-shadow .2s ease;
 }
+
 .chat-toggle-btn:hover {
   transform: scale(1.08);
   box-shadow: 0 22px 55px rgba(56,189,248,.55);
@@ -2019,27 +2019,24 @@ animateParticles();
 
 <!-- =============== SCRIPT DEL CHATBOT =============== -->
 <script>
-// ======== ELEMENTOS ========
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
 const chatToggle = document.getElementById("chatToggleBtn");
 
-// ======== ABRIR CHAT ========
+// Abrir chat
 chatToggle.addEventListener("click", () => {
   chatWidget.style.display = "block";
   chatToggle.style.display = "none";
 });
 
-// ======== CERRAR CHAT ========
+// Cerrar chat
 document.querySelector(".chat-close").addEventListener("click", () => {
   chatWidget.style.display = "none";
-  setTimeout(() => {
-    chatToggle.style.display = "flex";
-  }, 300);
+  setTimeout(() => chatToggle.style.display = "flex", 300);
 });
 
-// ======== ENTER PARA ENVIAR ========
+// Enviar con Enter
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -2047,7 +2044,7 @@ input.addEventListener("keydown", e => {
   }
 });
 
-// ======== ENVÍO DEL USUARIO ========
+// Enviar mensaje
 function sendLive() {
   const text = input.value.trim();
   if (!text) return;
@@ -2059,7 +2056,7 @@ function sendLive() {
   setTimeout(() => botLive(text), 300);
 }
 
-// ======== BOT WEBNIXIA ========
+// Respuesta del bot
 async function botLive(userText) {
   chat.innerHTML += `<div class="bot">🤖 Pensando...</div>`;
   chat.scrollTop = chat.scrollHeight;
@@ -2075,7 +2072,7 @@ async function botLive(userText) {
     const bots = document.querySelectorAll(".bot");
     bots[bots.length - 1].innerHTML = data.reply;
 
-  } catch (error) {
+  } catch {
     const bots = document.querySelectorAll(".bot");
     bots[bots.length - 1].innerHTML = "❌ Error de conexión.";
   }
