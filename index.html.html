@@ -1670,10 +1670,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      if (data.ok) {
-        successBanner.style.display = "block";
-        form.reset();
-      } else {
+if (data.ok) {
+  successBanner.style.display = "block";
+
+  const mensajeWhatsApp = `Hola WEBNIXIA 👋
+Mi nombre es ${nombre}.
+
+Quiero consultar por: ${tipo}
+
+Mensaje: ${mensaje}`;
+
+  const url = "https://wa.me/5493483466199?text=" + encodeURIComponent(mensajeWhatsApp);
+
+  setTimeout(() => {
+    window.open(url, "_blank");
+  }, 800);
+
+  form.reset();
+}
+else {
         alert("Error al guardar el contacto.");
       }
     } catch (err) {
