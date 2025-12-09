@@ -2088,24 +2088,23 @@ async function botLive(userText) {
 
   chat.scrollTop = chat.scrollHeight;
 }
-// === ABRIR AUTOMÁTICAMENTE AL BAJAR ===
-let chatOpenedAuto = false;
+let chatOpenedAutomatically = false;
 
 window.addEventListener("scroll", () => {
-  const scrollPercent =
-    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  const scrollY = window.scrollY;
 
-  if (!chatOpenedAuto && scrollPercent > 35) {
+  // Si baja más de 400px → abrir chat automáticamente
+  if (scrollY > 400 && !chatOpenedAutomatically) {
     chatWidget.style.display = "block";
     chatToggle.style.display = "none";
-    chatOpenedAuto = true;
+    chatOpenedAutomatically = true;
   }
-});
-// === CERRAR CHAT SI EL USUARIO SUBE ARRIBA ===
-window.addEventListener("scroll", () => {
-  if (window.scrollY < 120) {
+
+  // Si vuelve arriba → cerrar chat y permitir que se abra otra vez
+  if (scrollY < 200) {
     chatWidget.style.display = "none";
     chatToggle.style.display = "flex";
+    chatOpenedAutomatically = false;
   }
 });
 
