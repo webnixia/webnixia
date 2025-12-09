@@ -1030,6 +1030,32 @@
       box-shadow: 0 20px 50px rgba(22, 163, 74, 0.8);
       background: #16a34a;
     }
+.pulse {
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.wa-tooltip {
+  position: absolute;
+  right: 65px;
+  background: #16a34a;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  animation: floatIn 1.5s infinite alternate;
+}
+
+@keyframes floatIn {
+  from { opacity: 0.5; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(-3px); }
+}
 
     /* ========== ANIMATIONS ON SCROLL ========== */
     .reveal {
@@ -1885,6 +1911,15 @@ animateParticles();
 </div>
 
 <script>
+<script>
+setTimeout(() => {
+  const wa = document.querySelector(".whatsapp-float");
+  if (wa) {
+    wa.style.transform = "scale(1.15)";
+  }
+}, 10000);
+</script>
+
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
