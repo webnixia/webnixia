@@ -1883,19 +1883,18 @@ animateParticles();
 .chatbot-launch {
   position: fixed;
   right: 20px;
-  bottom: 60px; /* ← BAJAMOS EL CHATBOT */
+  bottom: 60px; /* ← ahora sí baja */
   width: 360px;
   max-width: 92%;
-  background: rgba(2, 6, 23, 0.72); /* ← GLASSMORPHISM */
-  backdrop-filter: blur(18px);       /* ← EFECTO VIDRIO */
-  border: 1px solid #1f2937;
+  background: rgba(2, 6, 23, 0.72); /* efecto vidrio */
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 20px;
-  box-shadow: 0 25px 80px rgba(0,0,0,.9);
+  box-shadow: 0 25px 80px rgba(0,0,0,.7);
   overflow: hidden;
   z-index: 999;
   animation: chatIn .6s ease;
 }
-
 
 @keyframes chatIn {
   from {opacity:0; transform:translateY(40px) scale(.95);}
