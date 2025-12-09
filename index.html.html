@@ -2001,7 +2001,23 @@ setTimeout(() => {
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
+const chatToggle = document.getElementById("chatToggleBtn");
 
+// ==== ABRIR CHAT ====
+chatToggle.addEventListener("click", () => {
+  chatWidget.style.display = "block";
+  chatToggle.style.display = "none"; // ocultar botón al abrir
+});
+
+// ==== CERRAR CHAT ====
+document.querySelector(".chat-close").addEventListener("click", () => {
+  chatWidget.style.display = "none";
+  setTimeout(() => {
+    chatToggle.style.display = "flex"; // aparece de vuelta
+  }, 300);
+});
+
+// ==== ENTER PARA ENVIAR ====
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -2054,11 +2070,6 @@ async function botLive(userText) {
 
   chat.scrollTop = chat.scrollHeight;
 }
-
-setTimeout(() => {
-  chatWidget.style.display = "block";
-  input.focus();
-}, 1200);
 </script>
 
 <!-- ================= FIN CHATBOT WEBNIXIA ================= -->
