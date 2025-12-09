@@ -2088,6 +2088,20 @@ async function botLive(userText) {
 
   chat.scrollTop = chat.scrollHeight;
 }
+// === ABRIR AUTOMÁTICAMENTE AL BAJAR ===
+let chatOpenedAuto = false;
+
+window.addEventListener("scroll", () => {
+  const scrollPercent =
+    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+  if (!chatOpenedAuto && scrollPercent > 35) {
+    chatWidget.style.display = "block";
+    chatToggle.style.display = "none";
+    chatOpenedAuto = true;
+  }
+});
+
 </script>
 
 </body>
