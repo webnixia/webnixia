@@ -1919,6 +1919,7 @@ setTimeout(() => {
 }, 10000);
 </script>
 
+<script>
 const input = document.getElementById("chatLiveInput");
 const chat = document.getElementById("chatBox");
 const chatWidget = document.getElementById("chatBotLive");
@@ -1946,45 +1947,27 @@ async function botLive(userText) {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-const res = await fetch("https://webnixia-bot.onrender.com/chat", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    message: userText
-  })
-});
+    const res = await fetch("https://webnixia-bot.onrender.com/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message: userText })
+    });
 
-const data = await res.json();
-const bots = document.querySelectorAll(".bot");
-bots[bots.length - 1].innerHTML = data.reply;
+    const data = await res.json();
+    const bots = document.querySelectorAll(".bot");
+    bots[bots.length - 1].innerHTML = data.reply;
 
-// ✅ DETECTAR LINK AUNQUE VENGA ENTRE PARÉNTESIS
-const urlRegex = /\(?https?:\/\/[^\s\)]+/g;
-const links = data.reply.match(urlRegex);
+    const urlRegex = /\(?https?:\/\/[^\s\)]+/g;
+    const links = data.reply.match(urlRegex);
 
-if (links && links.length > 0) {
-  let cleanUrl = links[0]
-    .replace("(", "")
-    .replace(")", "")
-    .replace(").", "")
-    .trim();
+    if (links && links.length > 0) {
+      let cleanUrl = links[0].replace(/[()]/g, "").trim();
+      setTimeout(() => window.open(cleanUrl, "_blank"), 800);
+    }
 
-  console.log("Abriendo demo:", cleanUrl); // para debug
-
-  setTimeout(() => {
-    window.open(cleanUrl, "_blank");
-  }, 800);
-}
-
-
-// ✅ Si la IA menciona WhatsApp, lo abre solo
-if (data.reply.toLowerCase().includes("whatsapp")) {
-  setTimeout(() => {
-    window.open("https://wa.me/5493483466199", "_blank");
-  }, 1500);
-}
+    if (data.reply.toLowerCase().includes("whatsapp")) {
+      setTimeout(() => window.open("https://wa.me/5493483466199", "_blank"), 1500);
+    }
 
   } catch (error) {
     const bots = document.querySelectorAll(".bot");
@@ -1994,12 +1977,12 @@ if (data.reply.toLowerCase().includes("whatsapp")) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-// ✅ Se abre solo al entrar
 setTimeout(() => {
   chatWidget.style.display = "block";
   input.focus();
 }, 1200);
 </script>
+
 <!-- ================= FIN CHATBOT WEBNIXIA ================= -->
 
 <a href="https://wa.me/5493483466199" target="_blank" class="whatsapp-float pulse">
