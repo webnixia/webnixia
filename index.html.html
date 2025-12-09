@@ -2103,9 +2103,74 @@ async function botLive(userText) {
   <div class="wa-tooltip">¿Hablamos ahora?</div>
 </a>
 <!-- BOTÓN PARA ABRIR CHAT -->
-<div id="chatToggleBtn" class="chat-toggle-btn">
-  💬
-</div>
+<div id="chatToggleBtn" class="chat-toggle-btn">💬</div>
+
+<script>
+// ======== CHATBOT SCRIPT DEBE IR AL FINAL ========
+const input = document.getElementById("chatLiveInput");
+const chat = document.getElementById("chatBox");
+const chatWidget = document.getElementById("chatBotLive");
+const chatToggle = document.getElementById("chatToggleBtn");
+
+// ==== ABRIR CHAT ====
+chatToggle.addEventListener("click", () => {
+  chatWidget.style.display = "block";
+  chatToggle.style.display = "none";
+});
+
+// ==== CERRAR CHAT ====
+document.querySelector(".chat-close").addEventListener("click", () => {
+  chatWidget.style.display = "none";
+  setTimeout(() => {
+    chatToggle.style.display = "flex";
+  }, 300);
+});
+
+// ==== ENTER PARA ENVIAR ====
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendLive();
+  }
+});
+
+// ==== ENVÍO ====
+function sendLive() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  chat.innerHTML += `<div class="user">${text}</div>`;
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
+
+  setTimeout(() => botLive(text), 400);
+}
+
+// ==== BOT ====
+async function botLive(userText) {
+  chat.innerHTML += `<div class="bot">🤖 Pensando...</div>`;
+  chat.scrollTop = chat.scrollHeight;
+
+  try {
+    const res = await fetch("https://webnixia-bot.onrender.com/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message: userText })
+    });
+
+    const data = await res.json();
+    const bots = document.querySelectorAll(".bot");
+    bots[bots.length - 1].innerHTML = data.reply;
+
+  } catch (error) {
+    const bots = document.querySelectorAll(".bot");
+    bots[bots.length - 1].innerHTML = "❌ Error de conexión.";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
 
 </body>
 </html>
