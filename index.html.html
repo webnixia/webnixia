@@ -1270,6 +1270,66 @@
   color: #9ca3af;
 }
 
+    /* ----- FIX COMPLETO PARA RESPONSIVE HERO 2025 ----- */
+
+@media (max-width: 850px) {
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+
+  .hero-title2025 {
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+  }
+
+  .hero-sub2025 {
+    margin: 0 auto 24px;
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-video-wrapper {
+    width: 100% !important;
+    max-width: 330px;
+    height: 200px !important;
+    margin: 0 auto;
+  }
+
+  .hero-video {
+    object-fit: cover;
+  }
+
+  .hero-blob {
+    width: 240px !important;
+    height: 200px !important;
+    right: 0 !important;
+    top: 20% !important;
+    filter: blur(30px) !important;
+    opacity: 0.5 !important;
+  }
+}
+
+/* Ajuste extra para pantallas muy chicas */
+@media (max-width: 480px) {
+  .hero-title2025 {
+    font-size: 1.9rem !important;
+  }
+
+  .hero-video-wrapper {
+    max-width: 280px;
+    height: 180px !important;
+  }
+
+  .hero-blob {
+    display: none; /* si querés mantenerlo, bajamos más el tamaño */
+  }
+}
+
   </style>
 </head>
 <body>
